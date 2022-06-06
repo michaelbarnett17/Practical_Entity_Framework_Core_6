@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore_Ch_02_Activity_1", "Ch_02_Activity_1\EFCore_Ch_02_Activity_1.csproj", "{C411FC5B-0A5A-4327-8A56-35901C8562F1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore_DBLibrary", "EFCore_DBLibrary\EFCore_DBLibrary.csproj", "{A09AC95A-7094-47FF-8776-0D0F28E7E298}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Activity_1", "Activity_1\Activity_1.csproj", "{06D9AD2C-5692-4A86-99C2-B649D085F62D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C411FC5B-0A5A-4327-8A56-35901C8562F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C411FC5B-0A5A-4327-8A56-35901C8562F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C411FC5B-0A5A-4327-8A56-35901C8562F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C411FC5B-0A5A-4327-8A56-35901C8562F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A09AC95A-7094-47FF-8776-0D0F28E7E298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A09AC95A-7094-47FF-8776-0D0F28E7E298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09AC95A-7094-47FF-8776-0D0F28E7E298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09AC95A-7094-47FF-8776-0D0F28E7E298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
