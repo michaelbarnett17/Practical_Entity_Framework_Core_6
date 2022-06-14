@@ -1,7 +1,6 @@
 ﻿using InventoryModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace EFCore_DBLibrary
 {
