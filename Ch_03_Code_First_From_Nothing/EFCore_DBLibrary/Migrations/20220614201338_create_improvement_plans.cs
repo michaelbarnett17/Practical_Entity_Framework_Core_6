@@ -4,7 +4,7 @@
 
 namespace EFCore_DBLibrary.Migrations
 {
-    public partial class initial_setup_create_items_table : Migration
+    public partial class create_improvement_plans : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
