@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore_DBLibrary", "EFCore_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Activity_1", "Activity_1\Activity_1.csproj", "{06D9AD2C-5692-4A86-99C2-B649D085F62D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scaffolder", "Scaffolder\Scaffolder.csproj", "{F97D8593-C95A-459D-A7AB-7B1A5F689DF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06D9AD2C-5692-4A86-99C2-B649D085F62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97D8593-C95A-459D-A7AB-7B1A5F689DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97D8593-C95A-459D-A7AB-7B1A5F689DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97D8593-C95A-459D-A7AB-7B1A5F689DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97D8593-C95A-459D-A7AB-7B1A5F689DF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
