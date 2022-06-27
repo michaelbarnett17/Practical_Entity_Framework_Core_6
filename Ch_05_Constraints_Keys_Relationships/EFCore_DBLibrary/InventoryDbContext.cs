@@ -11,6 +11,10 @@ namespace EFCore_DBLibrary
 
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryDetail> CategoryDetails { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+
 
         public InventoryDbContext() { }
 
@@ -29,6 +33,26 @@ namespace EFCore_DBLibrary
                 optionsBuilder.UseSqlServer(cnstr);
 
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>()
+                        .HasMany(x => x.Players)
+                        .WithMany(p => p.Items)
+                        .UsingEntity<Dictionary<string, object>>(
+                            "ItemPlayers",
+                            ip => ip.HasOne<Player>()
+                                    .WithMany()
+                                    .HasForeignKey("PlayerId")
+                                    .HasConstraintName("FK_ItemPlayer_Players_PlayerId")
+                                    .OnDelete(DeleteBehavior.Cascade),
+                            ip => ip.HasOne<Item>()
+                                    .WithMany()
+                                    .HasForeignKey("ItemId")
+                                    .HasConstraintName("FK_PlayerItem_Items_ItemId")
+                                    .OnDelete(DeleteBehavior.ClientCascade)
+                        );
         }
 
         public override int SaveChanges()

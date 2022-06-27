@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace InventoryModels
+namespace InventoryModels;
+
+public class Category : FullAuditModel
 {
-    public class Category
-    {
-    }
+    [StringLength(InventoryModelsConstants.MAX_NAME_LENGTH)]
+    [Required]
+    public string Name { get; set; }
+
+    public virtual CategoryDetail Detail { get; set; }
+
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryModels.Interfaces;
 
-public interface IIdenityModel
+public interface IIdentityModel
 {
     public int Id { get; set; }
 }

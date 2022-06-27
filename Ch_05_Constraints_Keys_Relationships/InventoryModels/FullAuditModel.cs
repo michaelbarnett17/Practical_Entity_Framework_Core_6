@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InventoryModels;
 
-public abstract class FullAuditModel : IIdenityModel, IAuditedModel, IActivatableModel, ISoftDeletable
+public abstract class FullAuditModel : IIdentityModel, IAuditedModel, IActivatableModel, ISoftDeletable
 {
     [Key]
     public int Id { get; set; }
