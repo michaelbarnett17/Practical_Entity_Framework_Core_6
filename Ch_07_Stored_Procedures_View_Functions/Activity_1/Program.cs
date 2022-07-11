@@ -2,8 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using EFCore_DBLibrary;
 using InventoryModels;
+using Microsoft.Data.SqlClient;
 
-namespace Activity_2;
+namespace InventoryHelpers;
 
 public class Program
 {
@@ -15,11 +16,9 @@ public class Program
     static void Main(string[] args)
     {
         BuildOptions();
-        DeleteAllItems();
-        EnsureItems();
-        UpdateItems();
         ListInventory();
         GetItemsForListing();
+        GetItemsTotalValues();
     }
 
     static void BuildOptions()
@@ -29,16 +28,7 @@ public class Program
         _optionsBuilder.UseSqlServer(_configuration.GetConnectionString("InventoryManager"));
     }
 
-    static void EnsureItems()
-    {
-        EnsureItem("Batman Begins", "You either die the hero or live long enough to see yourself become the villain", "Christian Bale, Katie Holmes");
-        EnsureItem("Inception", "You mustn't be afraid to dream a little bigger, darling", "Leonardo DiCaprio, Tom Hardy, Joseph Gordon-Levitt");
-        EnsureItem("Remember the Titans", "Left Side, Strong Side", "Denzell Washington, Will Patton");
-        EnsureItem("Star Wars: The Empire Strikes Back", "He will join us or die, master", "Harrison Ford, Carrie Fisher, Mark Hamill");
-        EnsureItem("Top Gun", "I feel the need, the need for speed!", "Tom Cruise, Anthony Edwards, Val Kilmer");
-    }
-
-        private static void EnsureItem(string name, string description, string notes)
+    private static void EnsureItem(string name, string description, string notes)
     {
         Random r = new Random();
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
@@ -50,8 +40,8 @@ public class Program
             if (existingItem == null)
             {
                 //doesn't exist, add it.
-                var item = new Item() 
-                { 
+                var item = new Item()
+                {
                     Name = name,
                     CreatedByUserId = _loggedInUserId,
                     IsActive = true,
@@ -75,6 +65,40 @@ public class Program
         }
     }
 
+    private static void GetAllActiveItemsAsPipeDelimitedString()
+    {
+        using (var db = new InventoryDbContext(_optionsBuilder.Options))
+        {
+            var isActiveParm = new SqlParameter("IsActive", 1);
+
+            var result = db.AllItemsOutput
+                            .FromSqlRaw("SELECT [dbo].[ItemNamesPipeDelimitedString] (@IsActive) AllItems", isActiveParm)
+                            .FirstOrDefault();
+
+            Console.WriteLine($"All active Items: {result.AllItems}");
+        }
+    }
+
+    private static void GetItemsTotalValues()
+    {
+        using (var db = new InventoryDbContext(_optionsBuilder.Options))
+        {
+            var isActiveParm = new SqlParameter("IsActive", 1);
+
+            var result = db.GetItemsTotalValues
+                            .FromSqlRaw("SELECT * from [dbo].[GetItemsTotalValue] (@IsActive)", isActiveParm)
+                            .ToList();
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"New Item] {item.Id,-10}" +
+                                    $"|{item.Name,-50}" +
+                                    $"|{item.Quantity,-4}" +
+                                    $"|{item.TotalValue,-5}");
+            }
+        }
+    }
+
     private static void GetItemsForListing()
     {
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
@@ -91,31 +115,5 @@ public class Program
             }
         }
     }
-
-    private static void DeleteAllItems()
-    {
-        using (var db = new InventoryDbContext(_optionsBuilder.Options))
-        {
-            var items = db.Items.ToList();
-            db.Items.RemoveRange(items);
-            db.SaveChanges();
-        }
-    }
-
-    private static void UpdateItems()
-    {
-        using (var db = new InventoryDbContext(_optionsBuilder.Options))
-        {
-            var items = db.Items.ToList();
-            foreach (var item in items)
-            {
-                item.CurrentOrFinalPrice = 9.99M;
-            }
-            db.Items.UpdateRange(items);
-            db.SaveChanges();
-        }
-    }
-
-
 
 }

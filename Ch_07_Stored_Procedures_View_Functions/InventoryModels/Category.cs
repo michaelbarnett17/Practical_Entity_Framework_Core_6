@@ -8,7 +8,7 @@ public class Category : FullAuditModel
     [Required]
     public string Name { get; set; }
 
-    public virtual CategoryDetail Detail { get; set; }
+    public virtual CategoryDetail CategoryDetail { get; set; }
 
 
 }
