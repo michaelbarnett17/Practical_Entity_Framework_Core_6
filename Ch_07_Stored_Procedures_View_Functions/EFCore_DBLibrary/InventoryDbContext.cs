@@ -18,6 +18,7 @@ namespace EFCore_DBLibrary
         public DbSet<GetItemsForListingDTO> ItemsForListing { get; set; }
         public DbSet<AllItemsPipeDelimitedStringDTO> AllItemsOutput { get; set; }
         public DbSet<GetItemsTotalValueDTO> GetItemsTotalValues { get; set; }
+        public DbSet<FullItemDetailDTO> FullItemDetailDTOs { get; set; }
 
 
 
@@ -90,7 +91,14 @@ namespace EFCore_DBLibrary
                 );
             });
 
+            modelBuilder.Entity<FullItemDetailDTO>(x =>
+            {
+                x.HasNoKey();
+                x.ToView("FullItemDetailDTOS");
+            });
         }
+
+
 
         public override int SaveChanges()
         {

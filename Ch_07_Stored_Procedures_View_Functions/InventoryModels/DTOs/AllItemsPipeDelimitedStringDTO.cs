@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryModels.DTOs
+namespace InventoryModels.DTOs;
+
+public class AllItemsPipeDelimitedStringDTO
 {
-    public class AllItemsPipeDelimitedStringDTO
-    {
-        public string AllItems { get; set; } = string.Empty;
-    }
+    public string AllItems { get; set; } = string.Empty;
 }

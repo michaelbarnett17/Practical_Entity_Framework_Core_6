@@ -19,6 +19,7 @@ public class Program
         ListInventory();
         GetItemsForListing();
         GetItemsTotalValues();
+        GetFullItemDetails();
     }
 
     static void BuildOptions()
@@ -115,5 +116,29 @@ public class Program
             }
         }
     }
+
+    private static void GetFullItemDetails()
+    {
+        using (var db = new InventoryDbContext(_optionsBuilder.Options))
+        {
+
+
+            var result = db.FullItemDetailDTOs
+                            .FromSqlRaw("SELECT * FROM [dbo].[vwFullItemDetails] " +
+                                        "ORDER BY ItemName, GenreName, Category, PlayerName ")
+                            .ToList();
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"New Item] {item.Id,-10}" +
+                                    $"|{item.ItemName,-50}" +
+                                    $"|{item.ItemDescription,-4}" +
+                                    $"|{item.PlayerName,-5}" +
+                                    $"|{item.Category,-5}" +
+                                    $"|{item.GenreName,-5}");
+            }
+        }
+    }
+
 
 }
