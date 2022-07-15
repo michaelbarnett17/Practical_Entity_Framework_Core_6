@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using InventoryModels.DTOs;
 using AutoMapper.QueryableExtensions;
 
-namespace Activity_2;
+namespace Activity_1;
 
 public class Program
 {
@@ -40,7 +40,11 @@ public class Program
         _configuration = ConfigurationBuilderSingleton.ConfigurationRoot;
         _optionsBuilder = new DbContextOptionsBuilder<InventoryDbContext>();
         _optionsBuilder.UseSqlServer(_configuration.GetConnectionString("InventoryManager"));
+
+
     }
+
+
 
     private static void BuildMapper()
     {

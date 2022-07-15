@@ -2,7 +2,7 @@
 using InventoryModels;
 using InventoryModels.DTOs;
 
-namespace Activity_2
+namespace Activity_1
 {
     public class InventoryMapper : Profile
     {
