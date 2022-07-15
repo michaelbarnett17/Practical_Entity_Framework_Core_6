@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryModels;
 
@@ -9,6 +10,7 @@ public class Item : FullAuditModel
 
     [StringLength(InventoryModelsConstants.MAX_NAME_LENGTH)]
     [Required]
+    [Column(TypeName = "VARCHAR")]
     public string Name { get; set; }
 
     [Range(InventoryModelsConstants.MINIMUM_QUANTITY, InventoryModelsConstants.MAXIMUM_QUANTITY)]

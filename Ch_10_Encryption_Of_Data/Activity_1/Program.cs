@@ -24,13 +24,13 @@ public class Program
     {
         BuildOptions();
         BuildMapper();
-        //ListInventory();
+        ListInventory();
         ListInventoryWithProjection();
         GetItemsForListing();
         GetItemsForListingLinq();
-        //GetAllActiveItemsAsPipeDelimitedString();
-        //GetItemsTotalValues();
-        //GetFullItemDetails();
+        GetAllActiveItemsAsPipeDelimitedString();
+        GetItemsTotalValues();
+        GetFullItemDetails();
         ListCategoriesAndColors();
 
     }
@@ -63,35 +63,44 @@ public class Program
     {
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
         {
-            var items = db.Items.OrderBy(x => x.Name).ToList();
-            var result = _mapper.Map<List<Item>, List<ItemDTO>>(items);
+            var result = db.Items.OrderBy(x => x.Name).Take(20)
+                                 .Select(x => new ItemDTO
+                                 {
+                                     Name = x.Name,
+                                     Description = x.Description
+                                 })
+                                 .ToList();
             result.ForEach(x => Console.WriteLine($"New Item: {x}"));
         }
     }
+
 
     private static void ListInventoryWithProjection()
     {
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
         {
             var items = db.Items
-                            .OrderBy(x => x.Name)
                             .ProjectTo<ItemDTO>(_mapper.ConfigurationProvider)
                             .ToList();
-            items.ForEach(x => Console.WriteLine($"New Item: {x}"));
+            items.OrderBy(x => x.Name).ToList().ForEach(x => Console.WriteLine($"New Item: {x}"));
         }
     }
+
 
     private static void GetAllActiveItemsAsPipeDelimitedString()
     {
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
         {
-            var isActiveParm = new SqlParameter("IsActive", 1);
+            //var isActiveParm = new SqlParameter("IsActive", 1);
 
-            var result = db.AllItemsOutput
-                            .FromSqlRaw("SELECT [dbo].[ItemNamesPipeDelimitedString] (@IsActive) AllItems", isActiveParm)
-                            .FirstOrDefault();
+            //var result = db.AllItemsOutput
+            //                .FromSqlRaw("SELECT [dbo].[ItemNamesPipeDelimitedString] (@IsActive) AllItems", isActiveParm)
+            //                .FirstOrDefault();
 
-            Console.WriteLine($"All active Items: {result.AllItems}");
+            var result = db.Items.Where(x => x.IsActive).ToList();
+            var pipeDelimitedString = string.Join("|", result);
+
+            Console.WriteLine($"All active Items: {pipeDelimitedString}");
         }
     }
 
@@ -139,7 +148,7 @@ public class Program
 
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
         {
-            var results = db.Items.Select(x => new ItemDTO
+            var results = db.Items.Include(x => x.Category).ToList().Select(x => new ItemDTO
             {
                 CreatedDate = x.CreatedDate,
                 CategoryName = x.Category.Name,
@@ -154,23 +163,30 @@ public class Program
             .OrderBy(y => y.CategoryName).ThenBy(z => z.Name)
             .ToList();
 
-            foreach (var itemDTO in results)
+            foreach (var itemDto in results)
             {
-                Console.WriteLine(itemDTO);
+                Console.WriteLine(itemDto);
             }
         }
+
     }
+
 
     private static void GetFullItemDetails()
     {
         using (var db = new InventoryDbContext(_optionsBuilder.Options))
         {
 
+            //var result = db.FullItemDetailDtos
+            //                .FromSqlRaw("SELECT * FROM [dbo].[vwFullItemDetails] " +
+            //                            "ORDER BY ItemName, GenreName, Category, PlayerName ")
+            //                .ToList();
 
             var result = db.FullItemDetailDTOs
-                            .FromSqlRaw("SELECT * FROM [dbo].[vwFullItemDetails] " +
-                                        "ORDER BY ItemName, GenreName, Category, PlayerName ")
-                            .ToList();
+                            .FromSqlRaw("SELECT * FROM [dbo].[vwFullItemDetails]")
+                            .ToList()
+                            .OrderBy(x => x.ItemName).ThenBy(x => x.GenreName)
+                                .ThenBy(x => x.Category).ThenBy(x => x.PlayerName);
 
             foreach (var item in result)
             {
@@ -183,6 +199,7 @@ public class Program
             }
         }
     }
+
 
     private static void ListCategoriesAndColors()
     {
