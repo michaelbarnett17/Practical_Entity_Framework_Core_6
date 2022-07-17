@@ -9,6 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using InventoryModels.DTOs;
 using AutoMapper.QueryableExtensions;
 
+// Do the following before running the first time:
+// 1) update-database
+// 2) run InventoryDataMigrator
+// 3) in InventoryDataMigrator run MapCategories.sql
+
 namespace Activity_1;
 
 public class Program
